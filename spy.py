@@ -102,7 +102,7 @@ def json():
 
     #Training model with adam optimizer and mean squared error loss function
     model.compile(loss='mean_squared_error',optimizer='adam')
-    model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=1,batch_size=64)
+    model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=n_epoch,batch_size=64)
 
     #PLotting loss, it shows that loss has decreased significantly and model trained well
     loss = model.history.history['loss']
@@ -135,6 +135,7 @@ def json():
     print("len(ds_test)",len(ds_test))
 
     #Getting the last 100 days records
+    # fut_inp = ds_test[(len(ds_test)-n_days):]
     fut_inp = ds_test[(len(ds_test)-100):]
 
     fut_inp = fut_inp.reshape(1,-1)
@@ -178,6 +179,7 @@ def json():
     plot_new=np.arange(1,101)
     plot_pred=np.arange(101,131)
 
+    # plt.plot(plot_new, normalizer.inverse_transform(ds_scaled[len(ds_scaled)-n_days:]))
     plt.plot(plot_new, normalizer.inverse_transform(ds_scaled[len(ds_scaled)-100:]))
     plt.plot(plot_pred, normalizer.inverse_transform(lst_output))
     plt.show()
